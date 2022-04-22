@@ -1,5 +1,7 @@
 package com.example.pp_3_1_3_bootstrap.controller;
 
+
+import com.example.pp_3_1_3_bootstrap.model.User;
 import com.example.pp_3_1_3_bootstrap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+
 
 @Controller
 public class UserController {
@@ -19,8 +22,10 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String pageForUser(Principal principal, Model model) {
-        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+    public String getUser(Principal principal, Model model) {
+        User user = userService.getUserByEmail(principal.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("roles", user.getRoles());
         return "user";
     }
 }

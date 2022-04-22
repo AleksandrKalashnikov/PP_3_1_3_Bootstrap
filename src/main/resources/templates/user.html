@@ -10,33 +10,29 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>User page</title>
 </head>
 <body>
 
-<!--Верхний бар-->
-<nav class="navbar navbar-expand-xl navbar-dark text-white bg-dark">
+<!-- Верхний бар -->
+<nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">
 
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse show" id="navbarDark">
-            <ul class="navbar-nav me-auto mb-2 mb-xl-0">
-                <span class="align-middle font-weight-bold mr-1" th:text="${user.getEmail()}"></span></b>
-                <span class="align-middle mr-1">with roles:</span>
-                <span class="align-middle" th:each="role:${user.getRoles()}" th:text="${role.getName}">
-                    </span>
-            </ul>
-        </div>
-
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-dark text-secondary">Logout</button>
-        </form>
-
-    </div>
+         <!-- Отображения емейла и роли пользователя-->
+         <strong><a th:text="${user.getEmail()}">...</a></strong>
+        <span class="text-start">with roles:
+            <a th:each="role : ${user.getRoles()}" th:text="${role.getName} + ' '"></a>
+        </span>
+    </span>
+    <ul class="navbar-nav px-4">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    </ul>
 </nav>
 
-<div class="row mt-3">
-
-    <!--Левый бар-->
+<!-- Левый бар -->
+<div class="row mt-5">
     <div class="col-2">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item">
@@ -45,43 +41,34 @@
         </ul>
     </div>
 
-    <!--Правый бар с таблицей-->
     <div class="col-10 bg-light">
 
         <h1>User information-page</h1>
-
-        <!--Таблица-->
-        <div class="tab-content" id="nav-tabContent">
-            <div id="nav-home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-home-tab">
-                <p><strong>About user</strong></p>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Role</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.getId()}"></td>
-                            <td th:text="${user.getName()}"></td>
-                            <td th:text="${user.getLastName()}"></td>
-                            <td th:text="${user.getAge()}"></td>
-                            <td th:text="${user.getEmail()}"></td>
-                            <td><span th:each="roles : ${user.getRoles()}" th:text="${roles}"></span></td>
-
-                        </tr>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                </div>
+        <div>
+            <p><strong>About user</strong></p>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="msg : ${user}">
+                        <td th:text="${msg.getId()}"></td>
+                        <td th:text="${msg.getName()}"></td>
+                        <td th:text="${msg.getLastName()}"></td>
+                        <td th:text="${msg.getAge()}"></td>
+                        <td th:text="${msg.getEmail()}"></td>
+                        <td><span th:each="role : ${msg.getRoles()}" th:text="${role.getName} + ' '"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

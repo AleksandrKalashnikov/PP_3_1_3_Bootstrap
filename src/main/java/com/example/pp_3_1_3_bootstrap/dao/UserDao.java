@@ -1,22 +1,24 @@
 package com.example.pp_3_1_3_bootstrap.dao;
 
-import com.example.pp_3_1_3_bootstrap.model.Role;
+
 import com.example.pp_3_1_3_bootstrap.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
+@Repository
 public interface UserDao {
 
-    void add(User user, Set<Role> roles);
+    void deleteUserId(long id);
 
-    void delete(long id);
+    User updateUser(User user);
 
-    User change(User user, Set<Role> roles);
+    void addUser(User user);
 
-    List<User> listUsers();
+    User getUserByEmail(String email);
 
-    User findUserById(long id);
+    User getUserById(long id);
 
-    User findUserByEmail(String email);
+    List<User> listUser();
+
 }

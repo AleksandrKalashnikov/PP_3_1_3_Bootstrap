@@ -1,15 +1,16 @@
 package com.example.pp_3_1_3_bootstrap.service;
 
+import com.example.pp_3_1_3_bootstrap.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserDetailsServiceImpl(UserService userService) {
@@ -18,6 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userService.findUserByEmail(email);
+        User user = userService.getUserByEmail(email);
+        user.getAuthorities().size();
+        return user.fromUser();
     }
 }
