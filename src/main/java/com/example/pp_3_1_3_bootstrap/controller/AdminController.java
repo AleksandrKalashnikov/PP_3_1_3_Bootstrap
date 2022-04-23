@@ -4,11 +4,12 @@ import com.example.pp_3_1_3_bootstrap.model.User;
 import com.example.pp_3_1_3_bootstrap.service.RoleService;
 import com.example.pp_3_1_3_bootstrap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @Controller
@@ -25,8 +26,8 @@ public class AdminController {
     }
 
     @GetMapping
-    public String printAllUsers(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
-                                Model model) {
+    public String printAllUsers(Principal principal, Model model) {
+        User user = userService.getUserByEmail(principal.getName());
         model.addAttribute("userList", userService.listUser());
         model.addAttribute("user", userService.getUserByEmail(user.getUsername()));
         model.addAttribute("roles", roleService.getListRole());

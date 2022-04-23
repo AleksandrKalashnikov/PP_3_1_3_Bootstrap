@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -63,13 +63,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="msg : ${user}">
-                        <td th:text="${msg.getId()}"></td>
-                        <td th:text="${msg.getName()}"></td>
-                        <td th:text="${msg.getLastName()}"></td>
-                        <td th:text="${msg.getAge()}"></td>
-                        <td th:text="${msg.getEmail()}"></td>
-                        <td><span th:each="role : ${msg.getRoles()}" th:text="${role.getName} + ' '"></span></td>
+                    <tr th:each="users : ${user}">
+                        <td th:text="${users.getId()}"></td>
+                        <td th:text="${users.getName()}"></td>
+                        <td th:text="${users.getLastName()}"></td>
+                        <td th:text="${users.getAge()}"></td>
+                        <td th:text="${users.getEmail()}"></td>
+                        <td><span th:each="role : ${users.getRoles()}" th:text="${role.getName()} + ' '"></span></td>
                     </tr>
                     </tbody>
                 </table>
