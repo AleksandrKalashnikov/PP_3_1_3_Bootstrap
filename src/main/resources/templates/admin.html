@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -37,15 +38,17 @@
 <div class="row mt-5">
 
     <!--Левый бар Переключатели админа и юзера -->
-    <div class="col-2">
-        <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" th:href="@{/admin}">Admin</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/user}">User</a>
-            </li>
-        </ul>
+    <div class="col-2 fixed-left">
+        <div th:fragment="leftmenu">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="nav-link active" th:href="@{/admin}">Admin</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('USER')">
+                    <a class="nav-link" th:href="@{/user}">User</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
 
@@ -93,7 +96,7 @@
                             <td th:text="${user.getLastName()}"></td>
                             <td th:text="${user.getAge()}"></td>
                             <td th:text="${user.getEmail()}"></td>
-                            <td><span th:each="roles : ${user.getRoles()}" th:text="${roles.getName} + ' '"></span></td>
+                            <td><span th:each="roles : ${user.getRoles()}" th:text="${roles.name} + ' '"></span></td>
 
                             <!-- Кнопки Delete и Edit -->
                             <td>

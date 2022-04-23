@@ -181,7 +181,8 @@ public class User implements UserDetails {
                 && Objects.equals(lastname, user.lastname)
                 && Objects.equals(email, user.email)
                 && Objects.equals(password, user.password)
-                && Objects.equals(passwordConfirm, user.passwordConfirm) && Objects.equals(roles, user.roles);
+                && Objects.equals(passwordConfirm, user.passwordConfirm)
+                && Objects.equals(roles, user.roles);
     }
 
     @Override

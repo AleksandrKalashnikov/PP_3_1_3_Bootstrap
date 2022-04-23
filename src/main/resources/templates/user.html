@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -21,7 +22,7 @@
          <!-- Отображения емейла и роли пользователя-->
          <strong><a th:text="${user.getEmail()}">...</a></strong>
         <span class="text-start">with roles:
-            <a th:each="role : ${user.getRoles()}" th:text="${role.getName} + ' '"></a>
+            <a th:each="role : ${user.getRoles()}" th:text="${role.name} + ' '"></a>
         </span>
     </span>
     <ul class="navbar-nav px-4">
@@ -36,10 +37,10 @@
 
     <div class="col-2">
         <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                 <a class="nav-link" th:href="@{/admin}">Admin</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasAuthority('USER')">
                 <a class="nav-link active" th:href="@{/user}">User</a>
             </li>
         </ul>
