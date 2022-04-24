@@ -27,16 +27,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                //Доступ только для пользователей с ролью Админ
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
+                //Доступ для пользователей с ролью Юзер, но разрешен переход с ролью Админ
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
+                //Все остальные страницы требуют аутентификации
                 .anyRequest()
                 .authenticated()
                 .and()
+                //Настройки для входа в систему
                 .formLogin()
                 .successHandler(successUserHandler)
                 .and()
-                .logout()
-                .logoutSuccessUrl("/");
+                //Логаут
+                .logout().logoutSuccessUrl("/");
     }
 
     @Bean
