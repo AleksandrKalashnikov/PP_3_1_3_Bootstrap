@@ -41,7 +41,7 @@ public class AdminController {
         return "redirect:/admin/";
     }
 
-    @GetMapping("{id}/remove")
+    @DeleteMapping("{id}/remove")
     public String remove(@PathVariable("id") long id) {
         userService.deleteUserId(id);
         return "redirect:/admin/";
@@ -56,7 +56,7 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("{id}")
+    @PutMapping("{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") long id,
                          @RequestParam(value = "editRoles") String[] roles) {
         user.setRoles(roleService.getSetRoles(roles));
