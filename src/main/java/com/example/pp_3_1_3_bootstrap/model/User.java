@@ -46,11 +46,12 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
 
-
-    public User(long id, String name, String lastname, String email, String password, Set<Role> roles) {
+    public User(long id, String name, String lastname, int age,
+                String email, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
+        this.age = age;
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -114,6 +115,10 @@ public class User implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return email;
@@ -137,10 +142,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Set<Role> getRoles() {
@@ -187,6 +188,7 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastname, age, email, password, passwordConfirm, roles);
+        return Objects.hash(id, name, lastname, age,
+                email, password, passwordConfirm, roles);
     }
 }
