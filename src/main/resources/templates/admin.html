@@ -93,10 +93,10 @@
                         <tr th:each="user : ${userList}">
                             <td th:text="${user.getId()}"></td>
                             <td th:text="${user.getName()}"></td>
-                            <td th:text="${user.getLastName()}"></td>
+                            <td th:text="${user.getLastname()}"></td>
                             <td th:text="${user.getAge()}"></td>
                             <td th:text="${user.getEmail()}"></td>
-                            <td><span th:each="roles : ${user.getRoles()}" th:text="${roles.name} + ' '"></span></td>
+                            <td><span th:each="roles : ${user.getRoles()}" th:text="${roles.getName()} + ' '"></span></td>
 
                             <!-- Кнопки Delete и Edit -->
                             <td>
@@ -133,7 +133,7 @@
 
                         <br>
                         <label for="lastname"><b>Last name</b></label>
-                        <input th:name="lastName" th:type="text" class="form-control"
+                        <input th:name="lastname" th:type="text" class="form-control"
                                id="lastname" placeholder="Last name"/>
 
                         <br>
@@ -201,7 +201,7 @@
                         </label>
 
                         <label><b>Last name</b>
-                            <input type="text" class="form-control" th:value="${editUser.lastName}" name="lastName">
+                            <input type="text" class="form-control" th:value="${editUser.lastname}" name="lastname">
                         </label>
 
                         <label><b>Age</b>
@@ -271,7 +271,7 @@
                         </label>
 
                         <label><b>Last name</b>
-                            <input type="text" class="form-control" th:value="${deleteUser.lastName}"
+                            <input type="text" class="form-control" th:value="${deleteUser.lastname}"
                                    readonly="readonly">
                         </label>
 

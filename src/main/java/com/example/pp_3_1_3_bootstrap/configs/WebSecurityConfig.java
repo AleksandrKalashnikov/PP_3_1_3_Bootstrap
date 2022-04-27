@@ -18,17 +18,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private final UserDetailsServiceImpl userDetailsService;
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsServiceImpl userDetailsService) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler,
+                             UserDetailsServiceImpl userDetailsService) {
         this.successUserHandler = successUserHandler;
         this.userDetailsService = userDetailsService;
     }
 
 
-    // Postman собака
+    // Postman собака пес
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/api/**");
+        web.ignoring().antMatchers("/api/users/**");
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,8 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 //Доступ для пользователей с ролью Юзер, но разрешен переход с ролью Админ
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/api/**").authenticated()
-                .antMatchers("api/authenticate**").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest()
                 .authenticated()

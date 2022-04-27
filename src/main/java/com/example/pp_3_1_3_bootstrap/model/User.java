@@ -73,11 +73,11 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public String getLastName() {
+    public String getLastname() {
         return lastname;
     }
 
-    public void setLastName(String lastname) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
@@ -109,6 +109,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
 
     @Override
     public String getPassword() {
@@ -153,7 +154,8 @@ public class User implements UserDetails {
     }
 
     public UserDetails fromUser() {
-        return new org.springframework.security.core.userdetails.User(email, password, getAuthorities());
+        return new org.springframework.security.core.userdetails.User(
+                email, password, getAuthorities());
     }
 
 
