@@ -28,7 +28,7 @@ public class AdminRESTController {
     public User getUser(@PathVariable long id) {
         User user = userService.getUserById(id);
         if (user == null) {
-            throw new NuSuchUserException("There is no user with ID = " + id +  " in Database");
+            throw new NuSuchUserException("There is no user with ID = " + id +  " in Database!");
         }
         return user;
     }
@@ -37,5 +37,22 @@ public class AdminRESTController {
     public User addUser(@RequestBody User user) {
         userService.addUser(user);
         return user;
+    }
+
+    @PutMapping("/users")
+    public User updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return user;
+
+    }
+
+    @DeleteMapping("/users/{id}")
+    public String deleteUser(@PathVariable long id) {
+        User user = userService.getUserById(id);
+        if (user == null) {
+            throw new NuSuchUserException("There is no user with ID = " + id + " in Database!");
+        }
+        userService.deleteUserId(id);
+        return "User with ID = " + id + " was deleted";
     }
 }
