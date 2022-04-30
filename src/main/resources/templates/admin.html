@@ -89,27 +89,30 @@
                             <th scope="col">Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="user : ${userList}">
-                            <td th:text="${user.getId()}"></td>
-                            <td th:text="${user.getName()}"></td>
-                            <td th:text="${user.getLastname()}"></td>
-                            <td th:text="${user.getAge()}"></td>
-                            <td th:text="${user.getEmail()}"></td>
-                            <td><span th:each="roles : ${user.getRoles()}" th:text="${roles.getName()} + ' '"></span></td>
+                        <tbody id="tableUsers">
 
-                            <!-- Кнопки Delete и Edit -->
-                            <td>
-                                <button th:href="${'#edit' + user.getId()}" type="button" class="btn btn-info"
-                                        data-toggle="modal">Edit
-                                </button>
-                            </td>
-                            <td>
-                                <button th:href="${'#delete' + user.getId()}" type="button" class="btn btn-danger"
-                                        data-toggle="modal">Delete
-                                </button>
-                            </td>
-                        </tr>
+<!--                        <tr th:each="user : ${userList}">-->
+<!--                            <td th:text="${user.getId()}"></td>-->
+<!--                            <td th:text="${user.getName()}"></td>-->
+<!--                            <td th:text="${user.getLastname()}"></td>-->
+<!--                            <td th:text="${user.getAge()}"></td>-->
+<!--                            <td th:text="${user.getEmail()}"></td>-->
+<!--                            <td><span th:each="roles : ${user.getRoles()}" th:text="${roles.getName()} + ' '"></span></td>-->
+
+<!--                            &lt;!&ndash; Кнопки Delete и Edit &ndash;&gt;-->
+<!--                            <td>-->
+<!--                                <button th:href="${'#edit' + user.getId()}" type="button" class="btn btn-info"-->
+<!--                                        data-toggle="modal">Edit-->
+<!--                                </button>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <button th:href="${'#delete' + user.getId()}" type="button" class="btn btn-danger"-->
+<!--                                        data-toggle="modal">Delete-->
+<!--                                </button>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+
+
                         </tbody>
                     </table>
                 </div>
@@ -316,6 +319,8 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script type="text/javascript" src="script/jsScript.js"></script>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
