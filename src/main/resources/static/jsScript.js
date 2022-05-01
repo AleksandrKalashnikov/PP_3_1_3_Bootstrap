@@ -71,88 +71,89 @@ function edit(id) {
                 '</div>' +
 
                 '<div class="col-sm-6 text-center">' +
-                '<form method="PUT">' +
-                '<div class="form-group">' +
-                '<label for="edit1">' +
+                    '<form method="PUT">' +
 
-                '<b>' +
-                'ID' +
-                '</b>' +
-                '</label>' +
-                '<input type="text" ' +
-                'class="form-control" id="edit1" name="id" value="' + user.id + '" readonly>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<label for="edit2">' +
-                '<b>' +
-                'First name' +
-                '</b>' +
-                '</label>' +
-                '<input type="text" ' +
-                'value="' + user.name + '" ' +
-                'class="form-control" id="edit2" name="name" ' +
-                'placeholder="First name">' +
-                '</div>' +
+                        '<div class="form-group">' +
+                        '<label for="edit1">' +
+                        '<b>' +
+                        'ID' +
+                        '</b>' +
+                        '</label>' +
+                        '<input type="text" ' +
+                        'class="form-control" id="edit1" name="id" value="' + user.id + '" readonly>' +
+                        '</div>' +
 
-                '<div class="form-group">' +
-                '<label for="edit3">' +
-                '<b>' +
-                'Last name' +
-                '</b>' +
-                '</label>' +
-                '<input type="text" ' +
-                'class="form-control" id="edit3" ' +
-                'value="' + user.lastname + '" name="lastname" ' +
-                'placeholder="Last name">' +
-                '</div>' +
+                        '<div class="form-group">' +
+                        '<label for="edit2">' +
+                        '<b>' +
+                        'First name' +
+                        '</b>' +
+                        '</label>' +
+                        '<input type="text" ' +
+                        'value="' + user.name + '" ' +
+                        'class="form-control" id="edit2" name="name" ' +
+                        'placeholder="First name">' +
+                        '</div>' +
 
-                '<div class="form-group">' +
-                '<label for="edit4">' +
-                '<b>' +
-                'Age' +
-                '</b>' +
-                '</label>' +
-                '<input type="number" ' +
-                'class="form-control" id="edit4" ' +
-                'value="' + user.age + '" name="age" ' +
-                'placeholder="Age">' +
-                '</div>' +
+                        '<div class="form-group">' +
+                        '<label for="edit3">' +
+                        '<b>' +
+                        'Last name' +
+                        '</b>' +
+                        '</label>' +
+                        '<input type="text" ' +
+                        'class="form-control" id="edit3" ' +
+                        'value="' + user.lastname + '" name="lastname" ' +
+                        'placeholder="Last name">' +
+                        '</div>' +
 
-                '<div class="form-group">' +
-                '<label for="edit5">' +
-                '<b>' +
-                'Email' +
-                '</b>' +
-                '</label>' +
-                '<input type="text" ' +
-                'class="form-control" id="edit5" ' +
-                'value="' + user.email + '" name="email" ' +
-                'placeholder="Email">' +
-                '</div>' +
+                        '<div class="form-group">' +
+                        '<label for="edit4">' +
+                        '<b>' +
+                        'Age' +
+                        '</b>' +
+                        '</label>' +
+                        '<input type="number" ' +
+                        'class="form-control" id="edit4" ' +
+                        'value="' + user.age + '" name="age" ' +
+                        'placeholder="Age">' +
+                        '</div>' +
 
-                '<div class="form-group">' +
-                '<label for="edit6">' +
-                '<b>' +
-                'Password' +
-                '</b>' +
-                '</label>' +
-                '<input type="password" class="form-control" name="password" ' +
-                'id="edit6" value="' + user.password + '">' +
-                '</div>' +
+                        '<div class="form-group">' +
+                        '<label for="edit5">' +
+                        '<b>' +
+                        'Email' +
+                        '</b>' +
+                        '</label>' +
+                        '<input type="text" ' +
+                        'class="form-control" id="edit5" ' +
+                        'value="' + user.email + '" name="email" ' +
+                        'placeholder="Email">' +
+                        '</div>' +
 
-                '<div class="form-group">' +
-                '<label for="select2">' +
-                '<b>' +
-                'Role' +
-                '</b>' +
-                '</label>' +
-                '<select multiple class="form-control" size="2" ' +
-                'name="roles" id="select2">' +
-                '<option value="ADMIN">ADMIN</option>' +
-                '<option value="USER">USER</option>' +
-                '</select>' +
-                '</div>' +
-                '</form>' +
+                        '<div class="form-group">' +
+                        '<label for="edit6">' +
+                        '<b>' +
+                        'Password' +
+                        '</b>' +
+                        '</label>' +
+                        '<input type="password" class="form-control" name="password" ' +
+                        'id="edit6" value="' + user.password + '">' +
+                        '</div>' +
+
+                        '<div class="form-group">' +
+                        '<label for="select2">' +
+                        '<b>' +
+                        'Role' +
+                        '</b>' +
+                        '</label>' +
+                        '<select multiple class="form-control" size="2" ' +
+                        'name="roles" id="select2">' +
+                        '<option value="ADMIN">ADMIN</option>' +
+                        '<option value="USER">USER</option>' +
+                        '</select>' +
+                        '</div>' +
+                    '</form>' +
 
                 '</div>' +
                 '<div class="col-sm-3">' +
