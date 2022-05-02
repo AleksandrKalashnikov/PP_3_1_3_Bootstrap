@@ -1,174 +1,244 @@
-// URL JSON
-const urlAppJson = 'http://localhost:8080/api/users'
-const tableUsers = document.querySelector('#tableUsers')
-let temp = ''
-
-// Метод GET
-const methodGet = {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'}
+const url = "http://localhost:8080/api/users/";
+const usersList = document.querySelector('#tableUsers');
+let output = '';
+// const addUserForm = document.querySelector('#addNewUserForm');
+// const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+// const editModalForm = document.querySelector('#editModalForm');
+// const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+// const deleteModalForm = document.querySelector('#deleteModalForm');
+//-----------------------------------------------------------------------------------------------------
+// Функция вывода юзеров в таблицу
+const showUsers = (users) => {
+    users.forEach(user => {
+        output += `
+            <tr id=${'row'+user.id}>
+                <td>${user.id}</td>
+                <td id=${'name'+user.id}>${user.name}</td>
+                <td id=${'lastname'+user.id}>${user.lastname}</td>
+                <td id=${'age'+user.id}>${user.age}</td>
+                <td id=${'email'+user.id}>${user.email}</td>
+                <td>
+                    <div id=${'roles'+user.id}>
+                        ${user.roles.map(role => role.name).join(" ")}
+                    </div>
+                </td>
+                <td class="text-white"><a class="btnEdit btn btn-info">Edit</a></td>
+                <td class="text-white"><a class="btnDelete btn btn-danger">Delete</a></td>
+            </tr>
+            `;
+    });
+    usersList.innerHTML = output;
 }
-
-// Вывод юзеров в таблицу
-async function getUsersInTable() {
-    const usersBody = document.getElementById('tableUsers')
-    let listUsers = ''
-
-    await fetch(urlAppJson)
-        .then(response => response.json())
-        .then(users => users.forEach(user => {
-            console.log(user)
-            listUsers += `
-                <tr>
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.lastname}</td>
-                    <td>${user.age}</td>
-                    <td>${user.email}</td>
-                    <td>${user.roles.map(r => " " + r.name).map(role => role)}</td>
-                    <td>
-                    <button type="button" class="btn btn-info" 
-                    onclick="editUserFunction(${user.id})" data-toggle="modal" 
-                    data-bs-target="#modalEdit" value="${user.id}">Edit</button>
-                    <td>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" id="${user.id}" 
-                    onclick="deleytejisaiod(${user.id})">Delete</button></td>
-                </tr>`
-        }))
-    usersBody.innerHTML = listUsers
-}
-
-//Обновления таблицы юзеров
-function refreshAllUsersTable() {
-    fetch(urlAppJson)
-        .then(response => response.json())
-        .then((data) => {
-            getUsersInTable(data)
-        })
-}
-
-refreshAllUsersTable()
-
-// Добавления Юзера
-function addUser() {
-    // Подключения полей
-    let name = document.getElementById('nameAdd').value
-    let lastname = document.getElementById('lastnameAdd').value
-    let age = document.getElementById('ageAdd').value
-    let email = document.getElementById('emailAdd').value
-    let password = document.getElementById('passwordAdd').value
-    let roles = $('[id="roleAdd"]').val()
-
-    for (let i = 0; i < roles.length; i++) {
-        if (roles[i] === 'USER') {
-            roles[i] = {
-                'id': 1,
-                'authority': 'USER'
-            }
-        }
-        if (roles[i] === 'ADMIN') {
-            roles[i] = {
-                'id': 2,
-                'authority': 'ADMIN'
-            }
-        }
-    }
-    // Отправка данных для добавления
-    fetch(urlAppJson, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name,
-            lastname,
-            age,
-            email,
-            password,
-            'roles': roles
-        })
-    } )
-        .then(() => {
-            // Переход на таблицу
-            document.getElementById('nav-home-tab').click()
-            getUsersInTable()
-            // Чистка формы
-            document.newUser.reset()
-        })
-}
+//-----------------------------------------------------------------------------------------------------
+// Передача данных из GET запроса в функцию вывода юзеров в таблицу
+fetch(url)
+    .then(response => response.json())
+    .then(data => showUsers(data))
+    .catch(error => console.log(error))
 
 
 
-function editUserFunction(id) {
-    console.log('edit user function')
-    let editForm = document.querySelector('#formEdit')
 
-    fetch(urlAppJson + '/' + id)
-        .then(response => response.json())
-        .then(userEdit => {
 
-            let inEdit = editForm.querySelectorAll('.inputEdit')
-            for (let inputEditElement of inEdit) {
-                console.log('test edit for user cycle')
-                if (inEdit.name === 'id') {
-                    inputEditElement.value = userEdit.id
-                } else if (inEdit.name === 'name') {
-                    inputEditElement.value = userEdit.name
-                } else if (inEdit.name === 'lastname') {
-                    inputEditElement.value = userEdit.lastname
-                } else if (inEdit.name === 'age') {
-                    inputEditElement.value = userEdit.age
-                } else if (inEdit.name === 'email') {
-                    inputEditElement.value = userEdit.email
-                } else if (inEdit.name === 'password') {
-                    inputEditElement.value = userEdit.password
-                }
-            }
-        })
 
-    //Отмена стандартного поведения браузера и отправка данных на изменения
-    editForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let id = editForm.querySelector('#idEdit').value
-        let name = editForm.querySelector('#nameEdit').value;
-        let lastname = editForm.querySelector('#lastnameEdit').value;
-        let age = editForm.querySelector('#ageEdit').value;
-        let email = editForm.querySelector('#emailEdit').value;
-        let password = editForm.querySelector('#passwordEdit').value;
-        let roles = () => {
-            let arrRoles = []
-            let options = document.querySelector('#rolesEdit').options
-            for (let i = 0; i < options.length; i++) {
-                if (options[i].selected) {
-                    arrRoles.push(roleList[i])
-                }
-            }
-            return arrRoles;
-        }
 
-        let editUser = {
-            id: id,
-            name: name,
-            lastname: lastname,
-            age: age,
-            email: email,
-            password: password,
-            authorities: roles()
-        }
-        fetch(urlAppJson, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(editUser)
-        }).then(r => {
-            console.log(editUser)
-            e.target.reset()
-            getUsersInTable()
-            $('#modalEdit').modal('hide')
-        })
-    })
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // URL JSON
+// const urlAppJson = 'http://localhost:8080/api/users'
+// const tableUsers = document.querySelector('#tableUsers')
+// let temp = ''
+//
+// // Метод GET
+// const methodGet = {
+//     method: 'GET',
+//     headers: {'Content-Type': 'application/json;charset=UTF-8'}
+// }
+//
+// // Вывод юзеров в таблицу
+// async function getUsersInTable() {
+//     const usersBody = document.getElementById('tableUsers')
+//     let listUsers = ''
+//
+//     await fetch(urlAppJson)
+//         .then(response => response.json())
+//         .then(users => users.forEach(user => {
+//             console.log(user)
+//             listUsers += `
+//                 <tr>
+//                     <td>${user.id}</td>
+//                     <td>${user.name}</td>
+//                     <td>${user.lastname}</td>
+//                     <td>${user.age}</td>
+//                     <td>${user.email}</td>
+//                     <td>${user.roles.map(r => " " + r.name).map(role => role)}</td>
+//                     <td>
+//                     <button type="button" class="btn btn-info"
+//                     onclick="editUserFunction(${user.id})" data-toggle="modal"
+//                     data-bs-target="#modalEdit" value="${user.id}">Edit</button>
+//                     <td>
+//                     <button type="button" class="btn btn-danger" data-toggle="modal" id="${user.id}"
+//                     onclick="deleytejisaiod(${user.id})">Delete</button></td>
+//                 </tr>`
+//         }))
+//     usersBody.innerHTML = listUsers
+// }
+//
+// //Обновления таблицы юзеров
+// function refreshAllUsersTable() {
+//     fetch(urlAppJson)
+//         .then(response => response.json())
+//         .then((data) => {
+//             getUsersInTable(data)
+//         })
+// }
+//
+// refreshAllUsersTable()
+//
+// // Добавления Юзера
+// function addUser() {
+//     // Подключения полей
+//     let name = document.getElementById('nameAdd').value
+//     let lastname = document.getElementById('lastnameAdd').value
+//     let age = document.getElementById('ageAdd').value
+//     let email = document.getElementById('emailAdd').value
+//     let password = document.getElementById('passwordAdd').value
+//     let roles = $('[id="roleAdd"]').val()
+//
+//     for (let i = 0; i < roles.length; i++) {
+//         if (roles[i] === 'USER') {
+//             roles[i] = {
+//                 'id': 1,
+//                 'authority': 'USER'
+//             }
+//         }
+//         if (roles[i] === 'ADMIN') {
+//             roles[i] = {
+//                 'id': 2,
+//                 'authority': 'ADMIN'
+//             }
+//         }
+//     }
+//     // Отправка данных для добавления
+//     fetch(urlAppJson, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             name,
+//             lastname,
+//             age,
+//             email,
+//             password,
+//             'roles': roles
+//         })
+//     } )
+//         .then(() => {
+//             // Переход на таблицу
+//             document.getElementById('nav-home-tab').click()
+//             getUsersInTable()
+//             // Чистка формы
+//             document.newUser.reset()
+//         })
+// }
+//
+//
+//
+// function editUserFunction(id) {
+//     console.log('edit user function')
+//     let editForm = document.querySelector('#formEdit')
+//
+//     fetch(urlAppJson + '/' + id)
+//         .then(response => response.json())
+//         .then(userEdit => {
+//
+//             let inEdit = editForm.querySelectorAll('.inputEdit')
+//             for (let inputEditElement of inEdit) {
+//                 console.log('test edit for user cycle')
+//                 if (inEdit.name === 'id') {
+//                     inputEditElement.value = userEdit.id
+//                 } else if (inEdit.name === 'name') {
+//                     inputEditElement.value = userEdit.name
+//                 } else if (inEdit.name === 'lastname') {
+//                     inputEditElement.value = userEdit.lastname
+//                 } else if (inEdit.name === 'age') {
+//                     inputEditElement.value = userEdit.age
+//                 } else if (inEdit.name === 'email') {
+//                     inputEditElement.value = userEdit.email
+//                 } else if (inEdit.name === 'password') {
+//                     inputEditElement.value = userEdit.password
+//                 }
+//             }
+//         })
+//
+//     //Отмена стандартного поведения браузера и отправка данных на изменения
+//     editForm.addEventListener('submit', (e) => {
+//         e.preventDefault();
+//         let id = editForm.querySelector('#idEdit').value
+//         let name = editForm.querySelector('#nameEdit').value;
+//         let lastname = editForm.querySelector('#lastnameEdit').value;
+//         let age = editForm.querySelector('#ageEdit').value;
+//         let email = editForm.querySelector('#emailEdit').value;
+//         let password = editForm.querySelector('#passwordEdit').value;
+//         let roles = () => {
+//             let arrRoles = []
+//             let options = document.querySelector('#rolesEdit').options
+//             for (let i = 0; i < options.length; i++) {
+//                 if (options[i].selected) {
+//                     arrRoles.push(roleList[i])
+//                 }
+//             }
+//             return arrRoles;
+//         }
+//
+//         let editUser = {
+//             id: id,
+//             name: name,
+//             lastname: lastname,
+//             age: age,
+//             email: email,
+//             password: password,
+//             authorities: roles()
+//         }
+//         fetch(urlAppJson, {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(editUser)
+//         }).then(r => {
+//             console.log(editUser)
+//             e.target.reset()
+//             getUsersInTable()
+//             $('#modalEdit').modal('hide')
+//         })
+//     })
+// }
 
 
 // function editUserFunction(id) {
