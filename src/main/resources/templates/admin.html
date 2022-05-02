@@ -157,81 +157,73 @@
 
 
 <!-- Всплывающее окно edit -->
-<div class="modalEditForm">
-    <div class="modal fade" id="modalEdit"  th:each="editUser : ${userList}" th:id="${'edit' + editUser.getId()}">
+<div class="modal fade" id="modalEdit" >
 
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-                <form th:method="PUT" th:action="@{/api/users}">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit user</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+            <div class="modal-body container-fluid text-center col-6">
 
-                    <div class="modal-body container-fluid text-center col-6">
+                <form role="form" class="form-horizontal" id="formEdit">
 
-                        <form role="form" class="form-horizontal" id="formEdit">
+                    <label for="idEdit"><b>ID</b>
+                        <input type="text" class="form-control inputEdit"
+                               readonly="readonly" id="idEdit">
+                    </label>
 
-                            <label for="idEdit"><b>ID</b>
-                                <input type="text" class="form-control" th:value="${editUser.id}"
-                                       readonly="readonly" id="idEdit">
-                            </label>
+                    <label for="nameEdit"><b>First name</b>
+                        <input type="text" class="form-control inputEdit"
+                               name="name" id="nameEdit">
+                    </label>
 
-                            <label for="nameEdit"><b>First name</b>
-                                <input type="text" class="form-control" th:value="${editUser.name}"
-                                       name="name" id="nameEdit">
-                            </label>
+                    <label for="lastnameEdit"><b>Last name</b>
+                        <input type="text" class="form-control inputEdit"
+                               name="lastname" id="lastnameEdit">
+                    </label>
 
-                            <label for="lastnameEdit"><b>Last name</b>
-                                <input type="text" class="form-control" th:value="${editUser.lastname}"
-                                       name="lastname" id="lastnameEdit">
-                            </label>
+                    <label for="ageEdit"><b>Age</b>
+                        <input type="number" class="form-control inputEdit"
+                               name="age" id="ageEdit">
+                    </label>
 
-                            <label for="ageEdit"><b>Age</b>
-                                <input type="number" class="form-control" th:value="${editUser.age}"
-                                       name="age" id="ageEdit">
-                            </label>
+                    <label for="emailEdit"><b>Email</b>
+                        <input type="text" class="form-control inputEdit"
+                               name="email" id="emailEdit">
+                    </label>
 
-                            <label for="emailEdit"><b>Email</b>
-                                <input type="text" class="form-control" th:value="${editUser.email}"
-                                       name="email" id="emailEdit">
-                            </label>
+                    <label for="passwordEdit"><b>Password</b>
+                        <input type="password" class="form-control inputEdit"
+                               name="password" id="passwordEdit">
+                    </label>
 
-                            <label for="passwordEdit"><b>Password</b>
-                                <input type="password" class="form-control" th:value="${editUser.password}"
-                                       name="password" id="passwordEdit">
-                            </label>
+                    <label for="rolesEdit"><b>Role</b>
+                        <select class="custom-select bd-primary"
+                                size="2" name="editRoles" multiple="multiple" style="width: 210px"
+                                id="rolesEdit">
+                            <option selected value="USER">USER</option>
+                            <option value="ADMIN">ADMIN<option>
+                        </select>
+                    </label>
 
-                            <label for="rolesEdit"><b>Role</b>
-                                <select class="custom-select bd-primary"
-                                        size="2" name="editRoles" multiple="multiple" style="width: 210px"
-                                        id="rolesEdit">
-                                    <option th:each="role : ${roles}"
-                                            th:value="${role.name}"
-                                            th:text="${role.name}"
-                                            th:selected="${role.name} == USER">
-                                    </option>
-                                </select>
-                            </label>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                        data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-info"
-                                        data-userid="" id="modalEditButton">Edit</button>
-                            </div>
-
-                        </form>
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info"
+                                data-userid="" id="modalEditButton">Edit</button>
                     </div>
 
                 </form>
 
             </div>
+
+
         </div>
     </div>
 </div>
