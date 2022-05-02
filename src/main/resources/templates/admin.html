@@ -134,7 +134,8 @@
 
                         <br>
                         <label for="roleAdd"><b>Role</b></label>
-                        <select multiple class="form-control form-control-sm" id="roleAdd" name="nameRoles" size="2">
+                        <select multiple class="form-control form-control-sm"
+                                id="roleAdd" name="nameRoles" size="2">
                             <option th:each="role:${roles}"
                                     th:value="${role.name}"
                                     th:text="${role.getName()}">
@@ -143,7 +144,7 @@
 
                         <br>
                         <button type="submit" class="btn btn-success"
-                                onclick="addNewUser()">Add new user</button>
+                                onclick="addUser()">Add new user</button>
 
                     </form>
 
