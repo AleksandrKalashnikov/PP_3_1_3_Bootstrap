@@ -4,6 +4,7 @@ import com.example.pp_3_1_3_bootstrap.exception_handling.NuSuchUserException;
 import com.example.pp_3_1_3_bootstrap.model.User;
 import com.example.pp_3_1_3_bootstrap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,10 +14,13 @@ import java.util.List;
 public class AdminRESTController {
 
     private UserService userService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminRESTController(UserService userService) {
+    public AdminRESTController(UserService userService,
+                               PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/users")
@@ -35,12 +39,14 @@ public class AdminRESTController {
 
     @PostMapping("/users")
     public User addUser(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
         return user;
     }
 
     @PutMapping("/users")
     public User updateUser(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
         return user;
 

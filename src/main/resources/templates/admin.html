@@ -90,22 +90,8 @@
                         </tr>
                         </thead>
                         <tbody id="tableUsers">
-                        <div id="modal1"></div>
-
-<!--                            &lt;!&ndash; Кнопки Delete и Edit &ndash;&gt;-->
-<!--                            <td>-->
-<!--                                <button th:href="${'#edit' + user.getId()}" type="button" class="btn btn-info"-->
-<!--                                        data-toggle="modal">Edit-->
-<!--                                </button>-->
-<!--                            </td>-->
-<!--                            <td>-->
-<!--                                <button th:href="${'#delete' + user.getId()}" type="button" class="btn btn-danger"-->
-<!--                                        data-toggle="modal">Delete-->
-<!--                                </button>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-
-
+                        <!-- JS  -->
+                            <div id="modal1"></div>
                         </tbody>
                     </table>
                 </div>
@@ -120,36 +106,35 @@
 
                 <div class="container-fluid text-center col-3">
 
-                    <form name="newUser" align="center" th:align="center" th:action="@{/admin}"
-                          th:method="post" th:object="${user}">
+                    <form name="newUser" align="center" th:align="center">
 
-                        <label for="name"><b>First name</b></label>
+                        <label for="nameAdd"><b>First name</b></label>
                         <input th:name="name" th:type="text" class="form-control"
-                               id="name" placeholder="First name"/>
+                               id="nameAdd" placeholder="First name"/>
 
                         <br>
-                        <label for="lastname"><b>Last name</b></label>
+                        <label for="lastnameAdd"><b>Last name</b></label>
                         <input th:name="lastname" th:type="text" class="form-control"
-                               id="lastname" placeholder="Last name"/>
+                               id="lastnameAdd" placeholder="Last name"/>
 
                         <br>
-                        <label for="age"><b>Age</b></label>
+                        <label for="ageAdd"><b>Age</b></label>
                         <input th:name="age" th:type="number" class="form-control"
-                               id="age" placeholder="Age"/>
+                               id="ageAdd" placeholder="Age"/>
 
                         <br>
-                        <label for="email"><b>Email</b></label>
+                        <label for="emailAdd"><b>Email</b></label>
                         <input th:name="email" th:type="email" class="form-control"
-                               id="email" placeholder="Email"/>
+                               id="emailAdd" placeholder="Email"/>
 
                         <br>
-                        <label for="password"><b>Password</b></label>
+                        <label for="passwordAdd"><b>Password</b></label>
                         <input th:name="password" th:type="password" class="form-control"
-                               id="password" placeholder="Password"/>
+                               id="passwordAdd" placeholder="Password"/>
 
                         <br>
-                        <label for="newRole"><b>Role</b></label>
-                        <select multiple class="form-control form-control-sm" id="newRole" name="nameRoles" size="2">
+                        <label for="roleAdd"><b>Role</b></label>
+                        <select multiple class="form-control form-control-sm" id="roleAdd" name="nameRoles" size="2">
                             <option th:each="role:${roles}"
                                     th:value="${role.name}"
                                     th:text="${role.getName()}">
@@ -157,7 +142,8 @@
                         </select>
 
                         <br>
-                        <button type="submit" class="btn btn-success">Add new user</button>
+                        <button type="submit" class="btn btn-success"
+                                onclick="addNewUser()">Add new user</button>
 
                     </form>
 
@@ -170,74 +156,84 @@
 
 
 <!-- Всплывающее окно edit -->
-<!--<div class="modal fade" th:each="editUser : ${userList}" th:id="${'edit' + editUser.getId()}">-->
-<!--    <div class="modal-dialog" role="document">-->
-<!--        <div class="modal-content">-->
+<div class="modalEditForm">
+    <div class="modal fade" id="modalEdit"  th:each="editUser : ${userList}" th:id="${'edit' + editUser.getId()}">
 
-<!--            <form th:method="PUT" th:action="@{/admin/{id}(id=${editUser.getId()})}">-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="modalEdit">Edit user</h5>-->
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
+                <form th:method="PUT" th:action="@{/api/users}">
 
-<!--                <div class="modal-body container-fluid text-center col-6">-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-<!--                    <form role="form" class="form-horizontal">-->
+                    <div class="modal-body container-fluid text-center col-6">
 
-<!--                        <label><b>ID</b>-->
-<!--                            <input type="text" class="form-control" th:value="${editUser.id}" readonly="readonly">-->
-<!--                        </label>-->
+                        <form role="form" class="form-horizontal" id="formEdit">
 
-<!--                        <label><b>First name</b>-->
-<!--                            <input type="text" class="form-control" th:value="${editUser.name}"-->
-<!--                                   name="name">-->
-<!--                        </label>-->
+                            <label for="idEdit"><b>ID</b>
+                                <input type="text" class="form-control" th:value="${editUser.id}"
+                                       readonly="readonly" id="idEdit">
+                            </label>
 
-<!--                        <label><b>Last name</b>-->
-<!--                            <input type="text" class="form-control" th:value="${editUser.lastname}" name="lastname">-->
-<!--                        </label>-->
+                            <label for="nameEdit"><b>First name</b>
+                                <input type="text" class="form-control" th:value="${editUser.name}"
+                                       name="name" id="nameEdit">
+                            </label>
 
-<!--                        <label><b>Age</b>-->
-<!--                            <input type="number" class="form-control" th:value="${editUser.age}" name="age">-->
-<!--                        </label>-->
+                            <label for="lastnameEdit"><b>Last name</b>
+                                <input type="text" class="form-control" th:value="${editUser.lastname}"
+                                       name="lastname" id="lastnameEdit">
+                            </label>
 
-<!--                        <label><b>Email</b>-->
-<!--                            <input type="text" class="form-control" th:value="${editUser.email}" name="email">-->
-<!--                        </label>-->
+                            <label for="ageEdit"><b>Age</b>
+                                <input type="number" class="form-control" th:value="${editUser.age}"
+                                       name="age" id="ageEdit">
+                            </label>
 
-<!--                        <label><b>Password</b>-->
-<!--                            <input type="password" class="form-control" th:value="${editUser.password}"-->
-<!--                                   name="password">-->
-<!--                        </label>-->
+                            <label for="emailEdit"><b>Email</b>
+                                <input type="text" class="form-control" th:value="${editUser.email}"
+                                       name="email" id="emailEdit">
+                            </label>
 
-<!--                        <label><b>Role</b>-->
-<!--                            <select id="editRole" class="custom-select bd-primary"-->
-<!--                                    size="2" name="editRoles" multiple="multiple" style="width: 210px">-->
-<!--                                <option th:each="role : ${roles}"-->
-<!--                                        th:value="${role.name}"-->
-<!--                                        th:text="${role.name}"-->
-<!--                                        th:selected="${role.name} == USER">-->
-<!--                                </option>-->
-<!--                            </select>-->
-<!--                        </label>-->
+                            <label for="passwordEdit"><b>Password</b>
+                                <input type="password" class="form-control" th:value="${editUser.password}"
+                                       name="password" id="passwordEdit">
+                            </label>
 
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                            <button type="submit" class="btn btn-info">Edit</button>-->
-<!--                        </div>-->
+                            <label for="rolesEdit"><b>Role</b>
+                                <select class="custom-select bd-primary"
+                                        size="2" name="editRoles" multiple="multiple" style="width: 210px"
+                                        id="rolesEdit">
+                                    <option th:each="role : ${roles}"
+                                            th:value="${role.name}"
+                                            th:text="${role.name}"
+                                            th:selected="${role.name} == USER">
+                                    </option>
+                                </select>
+                            </label>
 
-<!--                    </form>-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info"
+                                        data-userid="" id="modalEditButton">Edit</button>
+                            </div>
 
-<!--                </div>-->
+                        </form>
 
-<!--            </form>-->
+                    </div>
 
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Всплывающее окно delete -->
 <div class="modal fade" th:each="deleteUser : ${userList}" th:id="${'delete' + deleteUser.getId()}">
@@ -313,8 +309,8 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="jsScript.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"

@@ -34,12 +34,12 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping
-    public String add(@ModelAttribute("user") User user, @RequestParam(value = "nameRoles") String[] roles) {
-        user.setRoles(roleService.getSetRoles(roles));
-        userService.addUser(user);
-        return "redirect:/admin/";
-    }
+//    @PostMapping
+//    public String add(@ModelAttribute("user") User user, @RequestParam(value = "nameRoles") String[] roles) {
+//        user.setRoles(roleService.getSetRoles(roles));
+//        userService.addUser(user);
+//        return "redirect:/admin/";
+//    }
 
     @DeleteMapping("{id}/remove")
     public String remove(@PathVariable("id") long id) {
@@ -47,20 +47,20 @@ public class AdminController {
         return "redirect:/admin/";
     }
 
-    @GetMapping("{id}/edit")
-    public String edit(@ModelAttribute("user") User user, ModelMap model, @PathVariable("id") long id,
-                       @RequestParam(value = "editRoles") String[] roles) {
-        user.setRoles(roleService.getSetRoles(roles));
-        model.addAttribute("roles", roleService.getListRole());
-        model.addAttribute("user", userService.getUserById(id));
-        return "admin";
-    }
-
-    @PutMapping("{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id,
-                         @RequestParam(value = "editRoles") String[] roles) {
-        user.setRoles(roleService.getSetRoles(roles));
-        userService.updateUser(user);
-        return "redirect:/admin/";
-    }
+//    @GetMapping("{id}/edit")
+//    public String edit(@ModelAttribute("user") User user, ModelMap model, @PathVariable("id") long id,
+//                       @RequestParam(value = "editRoles") String[] roles) {
+//        user.setRoles(roleService.getSetRoles(roles));
+//        model.addAttribute("roles", roleService.getListRole());
+//        model.addAttribute("user", userService.getUserById(id));
+//        return "admin";
+//    }
+//
+//    @PutMapping("{id}")
+//    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id,
+//                         @RequestParam(value = "editRoles") String[] roles) {
+//        user.setRoles(roleService.getSetRoles(roles));
+//        userService.updateUser(user);
+//        return "redirect:/admin/";
+//    }
 }
