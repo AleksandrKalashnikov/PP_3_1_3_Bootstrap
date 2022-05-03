@@ -1,9 +1,10 @@
+
 const url = "http://localhost:8080/api/users/";
 const usersList = document.querySelector('#tableUsers');
 let output = '';
 // const addUserForm = document.querySelector('#addNewUserForm');
-// const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-// const editModalForm = document.querySelector('#editModalForm');
+const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+const editModalForm = document.querySelector('#editModalForm');
 // const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
 // const deleteModalForm = document.querySelector('#deleteModalForm');
 //-----------------------------------------------------------------------------------------------------
@@ -37,7 +38,67 @@ fetch(url)
     .catch(error => console.log(error))
 
 
+// Функция работы модалок
+const on = (element, event, selector, handler) => {
+    element.addEventListener(event, e => {
+        if(e.target.closest(selector)){
+            handler(e)
+        }
+    })
+}
 
+// Edit - открытие и заполнение модалки
+let idEditForm = 0
+on(document, 'click', '.btnEdit', e => {
+    const rowToEdit = e.target.parentNode.parentNode
+    idEditForm = rowToEdit.children[0].innerHTML
+    const nameEditForm = rowToEdit.children[1].innerHTML
+    const lastnameEditForm = rowToEdit.children[2].innerHTML
+    const ageEditForm = rowToEdit.children[3].innerHTML
+    const emailEditForm = rowToEdit.children[4].innerHTML
+    const passwordEditForm = rowToEdit.children[5].innerHTML
+    const rolesEditForm = rowToEdit.children[6].children[0].innerHTML.trim().split(" ")
+    console.log(rolesEditForm)
+    $('#idEdit').val(idEditForm);
+    $('#nameEdit').val(nameEditForm);
+    $('#lastnameEdit').val(lastnameEditForm);
+    $('#ageEdit').val(ageEditForm);
+    $('#emailEdit').val(emailEditForm);
+    $('#passwordEdit').val(passwordEditForm);
+    $('#rolesEdit').val(rolesEditForm);
+    editModal.show()
+})
+
+// Поведение кнопки у модалки Edit
+editModalForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    let editedUser = {
+        name: $('#nameEdit').val(),
+        lastname: $('#lastnameEdit').val(),
+        age: $('#ageEdit').val(),
+        username: $('#emailEdit').val(),
+        password: $('#passwordEdit').val(),
+        strRoles: $('#rolesEdit').val()
+    }
+    console.log(url+idEditForm)
+    await fetch(url+idEditForm, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedUser)
+    })
+    let response = await fetch(url+idEditForm);
+    let data = await response.json();
+    document.getElementById('name' + idEditForm).innerHTML = data.name;
+    document.getElementById('lastname' + idEditForm).innerHTML = data.lastname;
+    document.getElementById('age' + idEditForm).innerHTML = data.age;
+    document.getElementById('email' + idEditForm).innerHTML = data.email;
+    document.getElementById('password' + idEditForm).innerHTML = data.password;
+    document.getElementById('roles' + idEditForm).innerHTML = data.roles
+        .map(role => role.name).join(" ");
+    editModal.hide()
+})
 
 
 
