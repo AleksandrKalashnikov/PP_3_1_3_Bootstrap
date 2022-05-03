@@ -1,13 +1,15 @@
 
-const url = "http://localhost:8080/api/users/";
-const usersList = document.querySelector('#tableUsers');
-let output = '';
-// const addUserForm = document.querySelector('#addNewUserForm');
-const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-const editModalForm = document.querySelector('#editModalForm');
-// const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-// const deleteModalForm = document.querySelector('#deleteModalForm');
-//-----------------------------------------------------------------------------------------------------
+const url = "http://localhost:8080/api/users/"
+const usersList = document.querySelector('#tableUsers')
+let output = ''
+// const addUserForm = document.querySelector('#addNewUserForm')
+const editModal = new bootstrap.Modal(document.getElementById('editModal'))
+const editModalForm = document.querySelector('#editModalForm')
+const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'))
+const deleteModalForm = document.querySelector('#deleteModalForm')
+
+////*****************************************************************************************************
+
 // Функция вывода юзеров в таблицу
 const showUsers = (users) => {
     users.forEach(user => {
@@ -30,7 +32,9 @@ const showUsers = (users) => {
     });
     usersList.innerHTML = output;
 }
-//-----------------------------------------------------------------------------------------------------
+
+////*****************************************************************************************************
+
 // Передача данных из GET запроса в функцию вывода юзеров в таблицу
 fetch(url)
     .then(response => response.json())
@@ -46,6 +50,8 @@ const on = (element, event, selector, handler) => {
         }
     })
 }
+
+//*****************************************************************************************************
 
 // Edit - открытие и заполнение модалки
 let idEditForm = 0
@@ -76,32 +82,59 @@ editModalForm.addEventListener('submit', async (e) => {
         name: $('#nameEdit').val(),
         lastname: $('#lastnameEdit').val(),
         age: $('#ageEdit').val(),
-        username: $('#emailEdit').val(),
+        email: $('#emailEdit').val(),
         password: $('#passwordEdit').val(),
-        strRoles: $('#rolesEdit').val()
+        editRolesName: $('#rolesEdit').val()
     }
-    console.log(url+idEditForm)
-    await fetch(url+idEditForm, {
+    console.log(url + idEditForm)
+    await fetch(url + idEditForm, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(editedUser)
     })
-    let response = await fetch(url+idEditForm);
+    let response = await fetch(url + idEditForm);
     let data = await response.json();
     document.getElementById('name' + idEditForm).innerHTML = data.name;
     document.getElementById('lastname' + idEditForm).innerHTML = data.lastname;
     document.getElementById('age' + idEditForm).innerHTML = data.age;
     document.getElementById('email' + idEditForm).innerHTML = data.email;
-    document.getElementById('password' + idEditForm).innerHTML = data.password;
     document.getElementById('roles' + idEditForm).innerHTML = data.roles
         .map(role => role.name).join(" ");
     editModal.hide()
 })
 
+//*****************************************************************************************************
 
+// Delete - открытие и заполнение модалки
+let idDeleteForm = 0
+on(document, 'click', '.btnDelete', e => {
+    const rowToDelete = e.target.parentNode.parentNode
+    idDeleteForm = rowToDelete.children[0].innerHTML
+    const nameDeleteForm = rowToDelete.children[1].innerHTML
+    const lastnameDeleteForm = rowToDelete.children[2].innerHTML
+    const ageDeleteForm = rowToDelete.children[3].innerHTML
+    const emailDeleteForm = rowToDelete.children[4].innerHTML
+    const rolesDeleteForm = rowToDelete.children[5].children[0].innerHTML.trim().split(" ")
+    $('#idDelete').val(idDeleteForm);
+    $('#nameDelete').val(nameDeleteForm);
+    $('#lastnameDelete').val(lastnameDeleteForm);
+    $('#ageDelete').val(ageDeleteForm);
+    $('#emailDelete').val(emailDeleteForm);
+    $('#rolesListDelete').val(rolesDeleteForm);
+    deleteModal.show()
+})
 
+// Поведение кнопки у модалки Delete
+deleteModalForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await fetch(url + idDeleteForm, {
+        method: 'DELETE'
+    })
+    document.getElementById('row' + idDeleteForm).remove();
+    deleteModal.hide()
+})
 
 
 

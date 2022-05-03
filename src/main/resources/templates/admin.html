@@ -207,8 +207,8 @@
 
                     <label for="rolesEdit"><b>Role</b>
                         <select class="custom-select bd-primary"
-                                size="2" name="editRoles" multiple="multiple" style="width: 210px"
-                                id="rolesEdit" th:name="strRoles">
+                                size="2" name="editRolesName" multiple="multiple" style="width: 210px"
+                                id="rolesEdit">
                             <option th:each="role:${roles}"
                                     th:value="${role.name}"
                                     th:text="${role.getName()}">
@@ -233,71 +233,59 @@
 </div>
 
 <!-- Всплывающее окно delete -->
-<div class="modal fade" th:each="deleteUser : ${userList}" th:id="${'delete' + deleteUser.getId()}">
+<div class="modal fade" id="deleteModal" data-backdrop="static" data-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdropLabelDel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
-            <form th:method="DELETE" th:action="@{/admin/{id}/remove(id=${deleteUser.getId()})}">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDelete">Delete user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalDelete">Delete user</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            <div class="modal-body container-fluid text-center col-6">
 
-                <div class="modal-body container-fluid text-center col-6">
-                    <form role="form" class="form-horizontal">
+                <form role="form" class="form-horizontal" id="deleteModalForm">
 
+                    <label for="idDelete"><b>ID</b>
+                        <input type="text" class="form-control" id="idDelete" readonly="readonly">
+                    </label>
 
-                        <label><b>ID</b>
-                            <input type="text" class="form-control" th:value="${deleteUser.id}" readonly="readonly">
-                        </label>
+                    <label for="nameDelete"><b>First name</b>
+                        <input type="text" class="form-control" id="nameDelete" readonly="readonly">
+                    </label>
 
-                        <label><b>First name</b>
-                            <input type="text" class="form-control" th:value="${deleteUser.name}"
-                                   readonly="readonly">
-                        </label>
+                    <label for="lastnameDelete"><b>Last name</b>
+                        <input type="text" class="form-control" id="lastnameDelete" readonly="readonly">
+                    </label>
 
-                        <label><b>Last name</b>
-                            <input type="text" class="form-control" th:value="${deleteUser.lastname}"
-                                   readonly="readonly">
-                        </label>
+                    <label for="ageDelete"><b>Age</b>
+                        <input type="text" class="form-control" id="ageDelete" readonly="readonly">
+                    </label>
 
-                        <label><b>Age</b>
-                            <input type="text" class="form-control" th:value="${deleteUser.age}"
-                                   readonly="readonly">
-                        </label>
+                    <label for="emailDelete"><b>Email</b>
+                        <input type="text" class="form-control" id="emailDelete" readonly="readonly">
+                    </label>
 
-                        <label><b>Email</b>
-                            <input type="text" class="form-control" th:value="${deleteUser.email}"
-                                   readonly="readonly">
-                        </label>
+                    <label for="rolesDelete"><b>Role</b>
+                        <select class="form-control form-control-sm" size="2"
+                                multiple name="roles" style="width: 210px"
+                                id="rolesDelete" required disabled>
+                            <option value="1">ADMIN</option>
+                            <option value="2">USER</option>
+                        </select>
+                    </label>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                        <label><b>Password</b>
-                            <input type="password" class="form-control" th:value="${deleteUser.password}"
-                                   readonly="readonly">
-                        </label>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
 
-                        <label><b>Role</b>
-                            <select class="form-control form-control-sm" size="2"
-                                    multiple name="roles" style="width: 210px"
-                                    required disabled>
-                                <option value="1">ADMIN</option>
-                                <option value="2">USER</option>
-                            </select>
-                        </label>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
 
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </form>
+            </div>
 
         </div>
     </div>

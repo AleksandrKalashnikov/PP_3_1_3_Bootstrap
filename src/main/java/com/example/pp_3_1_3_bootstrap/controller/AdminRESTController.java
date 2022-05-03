@@ -44,9 +44,10 @@ public class AdminRESTController {
         return user;
     }
 
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
+    @PutMapping("/users/{id}")
+    public User updateUser(@RequestBody User user, @PathVariable Long id) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setId(id);
         userService.updateUser(user);
         return user;
 
