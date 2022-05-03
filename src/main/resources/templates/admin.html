@@ -106,45 +106,43 @@
 
                 <div class="container-fluid text-center col-3">
 
-                    <form name="newUser" align="center" th:align="center">
+                    <form id="newUserForm" align="center" th:align="center">
 
                         <label for="nameAdd"><b>First name</b></label>
-                        <input th:name="name" th:type="text" class="form-control"
+                        <input type="text" class="form-control"
                                id="nameAdd" placeholder="First name"/>
 
                         <br>
                         <label for="lastnameAdd"><b>Last name</b></label>
-                        <input th:name="lastname" th:type="text" class="form-control"
+                        <input type="text" class="form-control"
                                id="lastnameAdd" placeholder="Last name"/>
 
                         <br>
                         <label for="ageAdd"><b>Age</b></label>
-                        <input th:name="age" th:type="number" class="form-control"
+                        <input type="number" class="form-control"
                                id="ageAdd" placeholder="Age"/>
 
                         <br>
                         <label for="emailAdd"><b>Email</b></label>
-                        <input th:name="email" th:type="email" class="form-control"
+                        <input type="email" class="form-control"
                                id="emailAdd" placeholder="Email"/>
 
                         <br>
                         <label for="passwordAdd"><b>Password</b></label>
-                        <input th:name="password" th:type="password" class="form-control"
+                        <input type="password" class="form-control"
                                id="passwordAdd" placeholder="Password"/>
 
                         <br>
                         <label for="roleAdd"><b>Role</b></label>
                         <select multiple class="form-control form-control-sm"
                                 id="roleAdd" name="nameRoles" size="2">
-                            <option th:each="role:${roles}"
-                                    th:value="${role.name}"
-                                    th:text="${role.getName()}">
-                            </option>
+                            <option selected value="USER">USER</option>
+                            <option value="ADMIN">ADMIN</option>
                         </select>
 
                         <br>
-                        <button type="submit" class="btn btn-success"
-                                onclick="addUser()">Add new user</button>
+                        <button type="submit" id="newUserBtn"
+                                class="btn btn-success btn-lg btn-block">Add new user</button>
 
                     </form>
 

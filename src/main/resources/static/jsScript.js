@@ -2,11 +2,12 @@
 const url = "http://localhost:8080/api/users/"
 const usersList = document.querySelector('#tableUsers')
 let output = ''
-// const addUserForm = document.querySelector('#addNewUserForm')
+
 const editModal = new bootstrap.Modal(document.getElementById('editModal'))
 const editModalForm = document.querySelector('#editModalForm')
 const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'))
 const deleteModalForm = document.querySelector('#deleteModalForm')
+const addUserForm = document.querySelector('#newUserForm')
 
 ////*****************************************************************************************************
 
@@ -136,9 +137,42 @@ deleteModalForm.addEventListener('submit', async (e) => {
     deleteModal.hide()
 })
 
+//*****************************************************************************************************
 
-
-
+// Добавление нового юзера
+addUserForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    let addNewUserForm = $('#newUserForm')
+    let name = addNewUserForm.find('#nameAdd').val().trim();
+    let lastname = addNewUserForm.find('#lastnameAdd').val().trim();
+    let age = addNewUserForm.find('#ageAdd').val().trim();
+    let email = addNewUserForm.find('#emailAdd').val().trim();
+    let password = addNewUserForm.find('#passwordAdd').val().trim();
+    let roles = addNewUserForm.find('#roleAdd').val();
+    let newUserData = {
+        name: name,
+        lastname: lastname,
+        age: age,
+        email: email,
+        password: password,
+        strRoles: roles
+    }
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUserData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            const newUser = []
+            newUser.push(data)
+            showUsers(newUser)
+        });
+    addNewUserForm[0].reset();
+    $('.nav-tabs a[href="#nav-home"]').tab('show');
+})
 
 
 
